@@ -1,9 +1,6 @@
 const fs = require('fs'); 
 const chalk = require('chalk')
-const getNotes = () =>{
-    notes = "Salve eu sou thales"
-    return notes
-}
+
 
 const removeNotes = (title) =>{
     const notes = loadNotes()
@@ -18,10 +15,12 @@ const removeNotes = (title) =>{
 
 const addNotes = (title,body) =>{
     const notes = loadNotes()
-    const notaDuplicada = notes.filter(function(note){
-        return note.title === title
-    })
-    if (notaDuplicada.length === 0) {
+    const notaDuplicada = notes.find((note) => note.title == title)
+    // node inspect app.js add --title="tituldeagorao" --body="testedagora"
+    // Tem que ter o inspect para usar o comando debugger para
+    //debugger
+    debugger
+    if (!notaDuplicada) {
         notes.push({
             title: title,
             body: body
@@ -47,8 +46,24 @@ const loadNotes = () =>{
     }
     
 }
+const listNotes = ()=> {
+    const data = loadNotes()
+    data.forEach((note)=> console.log(chalk.blue("Titulo: "+note.title, "Texto: "+note.body)))
+}
+const readingNotes = (title)=>{
+    const data = loadNotes()
+    const ler = data.find((note)=> note.title === title)
+    
+    if (ler){
+        console.log(chalk.blue(ler.body))
+    }else{
+        console.log(chalk.red("Nao encontrado"))
+    }
+    
+}
 module.exports ={
-    getNotes, 
     addNotes,
-    removeNotes
+    removeNotes,
+    listNotes,
+    readingNotes
 }

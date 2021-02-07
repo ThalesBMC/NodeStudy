@@ -23,7 +23,7 @@ yargs.command({
             demandOption:true,
         }
     },
-    handler: function(argv) {
+    handler(argv) {
        notesUtils.addNotes(argv.title, argv.body)
     }
 })
@@ -31,25 +31,47 @@ yargs.command({
 yargs.command({
     command: 'remove',
     describe: 'Remove a note',
-    handler: function(argv) {
+    handler(argv) {
         notesUtils.removeNotes(argv.title)
     }
 })
 yargs.command({
     command: 'list',
     describe: 'List a note',
-    handler: function() {
+    handler() {
         console.log("Title: "+ args.title)
     }
 })
 yargs.command({
     command: 'read',
     describe: 'Read a note',
-    handler: function() {
+    handler() {
         console.log("Reading note")
     }
 })
-
+yargs.command({
+    command: 'list',
+    describe: 'List a note',
+    handler() {
+        console.log("Listing notes")
+        notesUtils.listNotes()
+    }
+})
+yargs.command({
+    command: 'read',
+    describe: 'Read a note',
+    builder:{
+        title:{
+            describe:'Note title for read',
+            type:'string',
+            demandOption:true,
+        }
+    },
+    handler(argv) {
+        console.log("Reading a note")
+        notesUtils.readingNotes(argv.title)
+    }   
+})
 //USAR ISSO PARA QUE POSSA RODAR
 yargs.parse()
 //Com yargs posso usar o --tile=string e ele retorna  como variavel.
